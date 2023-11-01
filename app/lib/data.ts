@@ -9,6 +9,7 @@ import {
   Revenue,
 } from "./definitions";
 import { formatCurrency } from "./utils";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function fetchRevenue() {
   // Add noStore() here prevent the response from being cached.
@@ -92,8 +93,8 @@ export async function fetchFilteredInvoices(
   query: string,
   currentPage: number
 ) {
+  noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
   try {
     const invoices = await sql<InvoicesTable>`
       SELECT
